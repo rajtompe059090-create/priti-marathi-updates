@@ -751,18 +751,66 @@ private fun YouTubeEmbeddedPlayer(
                 setBackgroundColor(android.graphics.Color.BLACK)
                 settings.apply {
                     javaScriptEnabled = true
+                    javaScriptCanOpenWindowsAutomatically = true
                     domStorageEnabled = true
+                    databaseEnabled = true
                     mediaPlaybackRequiresUserGesture = false
                     allowFileAccess = false
                     allowContentAccess = false
+                    mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
                     cacheMode = WebSettings.LOAD_DEFAULT
+                    userAgentString = userAgentString + " PritiMarathiUpdates"
                 }
-                webChromeClient = WebChromeClient()
-                webViewClient = object : WebViewClient() {}
+
+                val cookieManager = android.webkit.CookieManager.getInstance()
+                cookieManager.setAcceptCookie(true)
+                cookieManager.setAcceptThirdPartyCookies(this, true)
+
+                webChromeClient = object : WebChromeClient() {}
+
+                webViewClient = object : WebViewClient() {
+                    override fun onPageFinished(
+                        view: WebView?,
+                        url: String?
+                    ) {
+                        super.onPageFinished(view, url)
+                        android.util.Log.d(
+                            "PritiYouTube",
+                            "YouTube page loaded: $url"
+                        )
+                    }
+
+                    override fun onReceivedError(
+                        view: WebView?,
+                        errorCode: Int,
+                        description: String?,
+                        failingUrl: String?
+                    ) {
+                        super.onReceivedError(
+                            view,
+                            errorCode,
+                            description,
+                            failingUrl
+                        )
+                        android.util.Log.e(
+                            "PritiYouTube",
+                            "WebView error $errorCode: $description URL=$failingUrl"
+                        )
+                    }
+                }
+
                 addJavascriptInterface(bridge, "AndroidInterface")
 
                 val html = createYouTubePlayerHtml(videoId)
-                loadDataWithBaseURL("https://www.youtube.com", html, "text/html", "UTF-8", null)
+
+                loadDataWithBaseURL(
+                    "https://www.youtube.com/",
+                    html,
+                    "text/html",
+                    "UTF-8",
+                    "https://www.youtube.com/"
+                )
+
                 onPlayerCreated(this)
             }
         },
