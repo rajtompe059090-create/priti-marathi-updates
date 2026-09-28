@@ -25,8 +25,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 object AdMobConstants {
-    const val BANNER_TEST_AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741"
-    const val INTERSTITIAL_TEST_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
+    const val BANNER_TEST_AD_UNIT_ID = "ca-app-pub-6146868530948467/2163486647"
+    const val INTERSTITIAL_TEST_AD_UNIT_ID = "ca-app-pub-6146868530948467/9123646663"
 }
 
 class InterstitialAdManager(private val context: Context) {
