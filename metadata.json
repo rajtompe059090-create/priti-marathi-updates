@@ -1,0 +1,6 @@
+{
+  "name": "Priti Marathi Updates",
+  "description": "मराठी मालिकांचे वेगवान आणि सखोल विश्लेषण, दैनिक क्विझ आणि बक्षिसे",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
